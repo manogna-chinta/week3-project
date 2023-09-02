@@ -30,4 +30,18 @@ module "nat_gateway" {
   private_data_subnet_az1_id = module.vpc.private_data_subnet_az1_id
   private_data_subnet_az2_id = module.vpc.private_data_subnet_az2_id
 }
+#create security group
+module "security-group" {
+  source = "../modules/security-group"
+  vpc_id = module.vpc.vpc_id
+}
+# creating RDS instance
 
+module "rds" {
+  source                        = "../modules/rds"
+  database_security_group       = module.security-group.database_security_group_id
+  private_data_subnet_az1_id    = module.private_data_subnet_az2_id
+  private_data_subnet_az2_id    = module.private_data_subnet_az2_id 
+  database_username    = var.database_username
+  database_password    = var.database_password
+}
