@@ -1,9 +1,3 @@
-# configure aws provider
-provider "aws" {
-  region  = var.region
-  profile = "default"
-}
-
 # create vpc
 module "vpc" {
   source                           = "../modules/vpc"
